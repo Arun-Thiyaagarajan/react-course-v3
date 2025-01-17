@@ -6,7 +6,7 @@ const Wrapper = styled.article`
   display: grid;
   grid-template-rows: auto 1fr;
   border-radius: var(--borderRadius);
-  :hover {
+  &:hover {
     box-shadow: var(--shadow-4);
   }
   img {
