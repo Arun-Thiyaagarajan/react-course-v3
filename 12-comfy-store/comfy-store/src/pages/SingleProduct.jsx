@@ -12,6 +12,8 @@ export const loader = async ({ params }) => {
 
 const SingleProduct = () => {
   const { product } = useLoaderData();
+  let productsNavigateURL = localStorage.getItem('Comfy_FilteredProductsUrl') || '/products';
+  productsNavigateURL = productsNavigateURL.substring(productsNavigateURL.indexOf('/products'));
 
   const { image, title, price, description, colors, company } = product.attributes;
   const dollarsAmount = formatPrice(price);
@@ -30,7 +32,7 @@ const SingleProduct = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/">Products</Link>
+            <Link to={productsNavigateURL}>Products</Link>
           </li>
         </ul>
       </div>

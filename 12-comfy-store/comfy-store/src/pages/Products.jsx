@@ -1,8 +1,25 @@
+import { Filters, PaginationContainer, ProductsContainer } from "../components";
+import { customFetch } from "../utils";
 
+const url = '/products';
+
+export const loader = async ({ request }) => {
+  // For Persistence
+  const params = Object.fromEntries([...new URL(request.url).searchParams.entries()]);
+  localStorage.setItem('Comfy_FilteredProductsUrl', request.url);
+  const response = await customFetch(url, { params });
+  const products = response.data.data;
+  const meta = response.data.meta;
+  return { products, meta, params };
+};
 
 const Products = () => {
   return (
-    <h1 className="text-4xl">Products</h1>
+    <>
+      <Filters />
+      <ProductsContainer />
+      <PaginationContainer />
+    </>
   );
 }
 
