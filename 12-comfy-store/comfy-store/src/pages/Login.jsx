@@ -1,8 +1,46 @@
-import { Form, Link } from "react-router-dom";
-import { FormInput, SubmitBtn } from "../components";
+import { FormInput, SubmitBtn } from '../components';
+import { Form, Link, redirect, useNavigate } from 'react-router-dom';
+import { customFetch } from '../utils';
+import { toast } from 'react-toastify';
+import { loginUser } from '../features/user/userSlice';
+import { useDispatch } from 'react-redux';
 
+// This action will be called when the form is submitted
+export const action = (store) => async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  try {
+    const response = await customFetch.post('/auth/local', data);
+    store.dispatch(loginUser(response.data));
+    toast.success('Logged In Successfully');
+    return redirect('/');
+  } catch (error) {
+    const errorMessage = error?.response?.data?.error?.message || 'please double check your credentials';
+    toast.error(errorMessage);
+    return null;
+  }
+};
 
 const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const loginAsGuestUser = async () => { 
+    try {
+      const response = await customFetch.post('/auth/local', {
+        identifier: 'test@test.com',
+        password: 'secret',
+      });
+      dispatch(loginUser(response.data));
+      toast.success('Logged In Successfully as Guest');
+      navigate('/');
+    } catch (error) {
+      const errorMessage = 'Failed to log in as guest user';
+      toast.error(errorMessage);
+    }
+  }
+
   return (
     <section className="h-screen grid place-items-center">
       <Form method="POST" className="card w-96 p-8 bg-base-100 shadow-lg flex flex-col gap-y-4">
@@ -11,18 +49,16 @@ const Login = () => {
           type="email"
           label="email"
           name="identifier"
-          defaultValue="test@test.com"
         />
         <FormInput
           type="password"
           label="password"
           name="password"
-          defaultValue="secret"
         />
         <div className="mt-4">
           <SubmitBtn text="Login" />
         </div>
-        <button type="button" className="btn btn-secondary btn-block capitalize">
+        <button type="button" className="btn btn-secondary btn-block capitalize" onClick={loginAsGuestUser}>
           guest user
         </button>
         <p className="text-center">
