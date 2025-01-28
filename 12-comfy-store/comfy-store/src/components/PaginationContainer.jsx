@@ -34,12 +34,12 @@ const PaginationContainer = () => {
             <button
               key={pageNumber}
               onClick={() => handlePageChange(pageNumber)}
-              className={`btn btn-xs sm:btn-md border-none join-item ${
-                pageNumber === page ? 'bg-base-300 border-base-300' : ''
-              }`}
+              className={`btn btn-xs sm:btn-md border-none join-item 
+                ${pageNumber === page ? 'bg-base-300 border-base-300' : ''}`}
             >
-            {pageNumber}
-          </button>);
+              {pageNumber}
+            </button>
+          );
         })}
         <button
           className='btn btn-xs sm:btn-md join-item'
