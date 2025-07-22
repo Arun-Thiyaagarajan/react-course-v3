@@ -1,4 +1,4 @@
-function Component() {
+function Component(): JSX.Element | null | string {
   return (
     <div>
       <h2>React & Typescript</h2>

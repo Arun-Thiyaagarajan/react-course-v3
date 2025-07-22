@@ -16,7 +16,9 @@ function Component() {
           throw new Error(`Failed to fetch tours...`);
         }
         const rawData: Tour[] = await response.json();
+        console.log(rawData)
         const result = tourSchema.array().safeParse(rawData);
+        console.log(result)
 
         if (!result.success) {
           console.log(result.error.message);
