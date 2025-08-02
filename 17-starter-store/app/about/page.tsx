@@ -1,4 +1,6 @@
+import SectionTitle from "@/components/global/SectionTitle";
+
 function AboutPage() {
-  return <div>AboutPage</div>;
+  return <div><SectionTitle text="About Page" /></div>;
 }
 export default AboutPage;
