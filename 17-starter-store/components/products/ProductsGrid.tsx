@@ -7,7 +7,7 @@ import FavouriteToggleButton from "./FavouriteToggleButton";
 
 function ProductsGrid({ products }: { products: Product[] }) {
   return (
-    <div className='pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
+    <div className='pt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
       {products.map((product) => {
         const { name, price, image, id: productId } = product;
         const dollarsAmt = formatCurrency(price);
