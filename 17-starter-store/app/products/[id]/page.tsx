@@ -5,6 +5,7 @@ import AddToCart from "@/components/single-product/AddToCart";
 import ProductRating from "@/components/single-product/ProductRating";
 import BreadCrumbs from "@/components/single-product/Breadcrumbs";
 import FavouriteToggleButton from "@/components/products/FavouriteToggleButton";
+import ShareButton from "@/components/single-product/ShareButton";
 
 // --- Dynamic metadata for SEO ---
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 async function SingleProductPage({ params }: { params: { id: string } }) {
   const product = await fetchSingleProduct(params.id);
-  const { name, image, company, description, price } = product;
+  const { name, image, company, description, price, id: productId } = product;
   const dollarsAmount = formatCurrency(price);
 
   return (
@@ -39,13 +40,16 @@ async function SingleProductPage({ params }: { params: { id: string } }) {
         <div>
           <div className='flex gap-x-8 items-center'>
             <h1 className='capitalize text-3xl font-bold'>{name}</h1>
-            <FavouriteToggleButton productId={params.id} />
+            <div className="flex gap-x-2 items-center">
+              <FavouriteToggleButton productId={productId} />
+              <ShareButton productId={productId} name={product.name} />
+            </div>
           </div>
-          <ProductRating productId={params.id} />
+          <ProductRating productId={productId} />
           <h4 className='text-xl mt-2'>{company}</h4>
           <p className='mt-3 text-md bg-muted inline-block p-2 rounded-md'>{dollarsAmount}</p>
           <p className='mt-6 leading-8 text-muted-foreground'>{description}</p>
-          <AddToCart productId={params.id} />
+          <AddToCart productId={productId} />
         </div>
       </div>
     </section>
