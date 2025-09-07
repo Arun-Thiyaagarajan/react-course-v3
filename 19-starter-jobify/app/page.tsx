@@ -1,4 +1,8 @@
+import StatsPage from "@/app/(dashboard)/stats/page";
+
 const HomePage = () => {
-  return <div>Jobiby Starter project</div>;
+  return <div>
+    <StatsPage />
+  </div>;
 };
 export default HomePage;
